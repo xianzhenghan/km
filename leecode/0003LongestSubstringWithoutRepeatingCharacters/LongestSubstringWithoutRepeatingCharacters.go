@@ -23,6 +23,25 @@ func LongestSubstringWithoutRepeatingCharacters(s string) int {
 	}
 	return result
 }
+
+// 解法三 滑动窗口-哈希桶 这个总算法很好
+func lengthOfLongestSubstring2(s string) int {
+	fmt.Printf("s = %+v\n", s)
+	right, left, res := 0, 0, 0
+	indexes := make(map[byte]int, len(s))
+	for left < len(s) {
+		fmt.Printf("LongestSubstring2 idx=%d;left=%d; right=%d;indexes=%+v \n",
+			indexes[s[left]], left, right, indexes)
+		if idx, ok := indexes[s[left]]; ok && idx >= right {
+			right = idx + 1
+		}
+		indexes[s[left]] = left
+		left++
+		res = max(res, left-right)
+	}
+	return res
+}
+
 func max(a int, b int) int {
 	if a > b {
 		return a
