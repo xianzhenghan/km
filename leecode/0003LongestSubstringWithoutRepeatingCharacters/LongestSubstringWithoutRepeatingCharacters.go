@@ -42,6 +42,23 @@ func lengthOfLongestSubstring2(s string) int {
 	return res
 }
 
+//自己实现
+func lengthOfLongestTest(s string) int {
+	left, right, res := 0, 0, 0
+	indexs := make(map[byte]int, len(s))
+	for right < len(s) {
+		fmt.Printf("LongestSubstring2 idx=%d;left=%d; right=%d;indexes=%+v \n",
+			indexs[s[left]], left, right, indexs)
+		if idx, ok := indexs[s[right]]; ok && idx >= left {
+			left = idx + 1
+		}
+		indexs[s[right]] = right
+		right++
+		res = max(res, right-left)
+	}
+	return res
+}
+
 func max(a int, b int) int {
 	if a > b {
 		return a
